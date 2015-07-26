@@ -1,12 +1,17 @@
+# Global variables for github repository
+%global commit0 f8b18cff1d3bd24fbf666abb27ecc08785b67617
+%global gittag0 master
+%global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
+
 Name:           Cadence
 Version:        master
-Release:        5.git13c3ca8%{?dist}
+Release:        1%{?dist}
 Summary:        A JACK control center
 
 Group:          Applications/Multimedia
 License:        GPLv2+
 URL:            https://github.com/falkTX/Cadence
-Source0:        https://github.com/falkTX/Cadence/archive/master.zip
+Source0:        https://github.com/falkTX/%{name}/archive/%{commit0}.tar.gz#/%{name}-%{shortcommit0}.tar.gz
 
 BuildRequires: python3-qt4-devel
 BuildRequires: qt-devel
@@ -22,28 +27,13 @@ BuildRequires: jack_capture
 A JACK control center
 
 %prep
-%setup -q -n Cadence-master
+%setup -qn %{name}-%{commit0}
 
 %build
-make PREFIX=/usr DESTDIR=%{buildroot}
+make PREFIX=/usr DESTDIR=%{buildroot} %{?_smp_mflags}
 
 %install 
-make PREFIX=/usr DESTDIR=%{buildroot} install
-
-# Remove RPM_BUILD_ROOT from scripts
-sed -i "s|${RPM_BUILD_ROOT}||g" %{buildroot}/%{_sysconfdir}/X11/xinit/xinitrc.d/21cadence-session-inject
-sed -i "s|${RPM_BUILD_ROOT}||g" %{buildroot}/%{_bindir}/cadence-session-start
-sed -i "s|${RPM_BUILD_ROOT}||g" %{buildroot}/%{_bindir}/cadence-logs
-sed -i "s|${RPM_BUILD_ROOT}||g" %{buildroot}/%{_bindir}/catia
-sed -i "s|${RPM_BUILD_ROOT}||g" %{buildroot}/%{_bindir}/cadence-render
-sed -i "s|${RPM_BUILD_ROOT}||g" %{buildroot}/%{_bindir}/cadence-pulse2jack
-sed -i "s|${RPM_BUILD_ROOT}||g" %{buildroot}/%{_bindir}/cadence
-sed -i "s|${RPM_BUILD_ROOT}||g" %{buildroot}/%{_bindir}/catarina
-sed -i "s|${RPM_BUILD_ROOT}||g" %{buildroot}/%{_bindir}/claudia-launcher
-sed -i "s|${RPM_BUILD_ROOT}||g" %{buildroot}/%{_bindir}/cadence-aloop-daemon
-sed -i "s|${RPM_BUILD_ROOT}||g" %{buildroot}/%{_bindir}/claudia
-sed -i "s|${RPM_BUILD_ROOT}||g" %{buildroot}/%{_bindir}/cadence-jacksettings
-sed -i "s|${RPM_BUILD_ROOT}||g" %{buildroot}/%{_bindir}/cadence-pulse2loopback
+make PREFIX=/usr DESTDIR=%{buildroot} %{?_smp_mflags} install
 
 %post 
 update-desktop-database -q

@@ -42,19 +42,6 @@ make DESTDIR=%{buildroot} PREFIX=/usr LIBDIR=/usr/lib64 %{?_smp_mflags}
 
 %install 
 make DESTDIR=%{buildroot} PREFIX=/usr LIBDIR=/usr/lib64  %{?_smp_mflags} install
-
-# Remove RPM_BUILD_ROOT from scripts
-#sed -i "s|${RPM_BUILD_ROOT}||g" %{buildroot}/%{_bindir}/carla-settings
-#sed -i "s|${RPM_BUILD_ROOT}||g" %{buildroot}/%{_bindir}/carla-single
-#sed -i "s|${RPM_BUILD_ROOT}||g" %{buildroot}/%{_bindir}/carla-database
-#sed -i "s|${RPM_BUILD_ROOT}||g" %{buildroot}/%{_bindir}/carla-patchbay
-#sed -i "s|${RPM_BUILD_ROOT}||g" %{buildroot}/%{_bindir}/carla
-#sed -i "s|${RPM_BUILD_ROOT}||g" %{buildroot}/%{_bindir}/carla-rack
-#sed -i "s|${RPM_BUILD_ROOT}||g" %{buildroot}/%{_bindir}/carla-control
-#sed -i "s|${RPM_BUILD_ROOT}||g" %{buildroot}/%{_libdir}/pkgconfig/carla-standalone.pc
-#sed -i "s|${RPM_BUILD_ROOT}||g" %{buildroot}/%{_libdir}/pkgconfig/carla-utils.pc
-#sed -i "s|${RPM_BUILD_ROOT}||g" %{buildroot}/%{_libdir}/carla/carla-bridge-lv2-modgui
-#sed -i "s|${RPM_BUILD_ROOT}||g" %{buildroot}/%{_datadir}/carla/carla_shared.py
     
 %post 
 update-desktop-database -q
@@ -74,7 +61,6 @@ fi
 %{_bindir}/
 %{_includedir}/carla
 %{_libdir}/carla
-#%{_libdir}/debug
 %{_libdir}/lv2
 %{_libdir}/pkgconfig
 %{_libdir}/python3
