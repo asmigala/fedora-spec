@@ -28,6 +28,8 @@ BuildRequires: mxml-devel
 BuildRequires: zlib-devel
 BuildRequires: non-ntk-devel
 BuildRequires: mesa-libGL-devel
+BuildRequires: non-ntk-fluid
+BuildRequires: non-ntk-devel
 #BuildRequires: linuxsampler-devel
 #BuildRequires: libprojectM-devel
 
@@ -42,7 +44,10 @@ make DESTDIR=%{buildroot} PREFIX=/usr LIBDIR=/usr/lib64 %{?_smp_mflags}
 
 %install 
 make DESTDIR=%{buildroot} PREFIX=/usr LIBDIR=/usr/lib64  %{?_smp_mflags} install
-    
+
+# Create a vst directory
+%__install -m 755 -d %{buildroot}/%{_libdir}/vst/
+
 %post 
 update-desktop-database -q
 touch --no-create %{_datadir}/icons/hicolor >&/dev/null || :
