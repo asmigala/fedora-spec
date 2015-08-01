@@ -1,14 +1,29 @@
+# Global variables for github repository
+%global commit0 d394e832b24ec80ac4e2fc6ec9cbbc5508196bb1
+%global gittag0 master
+%global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
+
 Summary: Software Synthesizer
 Name: amsynth
 Version: 1.5.1
-Release: 0%{?dist}
+Release: 1%{?dist}
 License: GPL
 Group: Applications/Multimedia
-URL: https://code.google.com/p/amsynth/
-Source0: %{name}-%{version}.tar.gz
-BuildRequires: alsa-lib-devel gtkmm24-devel desktop-file-utils
-BuildRequires: jack-audio-connection-kit-devel libsndfile-devel
-BuildRequires: dssi-devel liblo-devel lash-devel lv2-devel
+URL:            https://github.com/nixxcode/amsynth
+Source0:        https://github.com/nixxcode/%{name}/archive/%{commit0}.tar.gz#/%{name}-%{shortcommit0}.tar.gz
+
+BuildRequires: alsa-lib-devel
+BuildRequires: gtkmm24-devel
+BuildRequires: desktop-file-utils
+BuildRequires: jack-audio-connection-kit-devel
+BuildRequires: libsndfile-devel
+BuildRequires: dssi-devel
+BuildRequires: liblo-devel
+BuildRequires: lash-devel
+BuildRequires: lv2-devel
+BuildRequires: autoconf
+BuildRequires: automake
+BuildRequires: libtool
 
 %description
 amSynth is a software synthesizer, taking inspiration from the
@@ -30,7 +45,7 @@ Group:          Applications/Multimedia
 Amsynth DSSI plugin
 
 %prep
-%setup -q -n amsynth-%{version}
+%setup -qn %{name}-%{commit0}
 
 %build
 autoreconf --force --install

@@ -1,6 +1,11 @@
+# Global variables for github repository
+%global commit0 d14f4511b2235906ad66c375ed9d4ad34db0283c
+%global gittag0 v1.1.3
+%global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
+
 Name:           lmms
 Version:        1.1.3
-Release:        6%{?dist}
+Release:        1%{?dist}
 Summary:        Linux MultiMedia Studio
 URL:            http://lmms.sourceforge.net/
 Group:          Applications/Multimedia
@@ -28,8 +33,7 @@ Group:          Applications/Multimedia
 License:        GPLv2+ and GPLv2 and (GPLv2+ or MIT) and GPLv3+ and MIT and LGPLv2+ and (LGPLv2+ with exceptions) and Copyright only
 
 # original tarfile can be found here:
-# Source0: ihttps://github.com/LMMS/lmms/archive/v1.1.3.zip
-Source0:        v%{version}.zip
+Source0:        https://github.com/lmms/%{name}/archive/%{commit0}.tar.gz#/%{name}-%{shortcommit0}.tar.gz
 
 # move the vst and zynaddsubfx plugins to libexecdir.
 Patch0:         lmms-1.1.3-libexecdir.patch
@@ -42,30 +46,31 @@ Patch1:         lmms-1.1.3-vst-nowine.patch
 # jack. output via pulseaudio has high latency, but we enable it
 # nevertheless as it is standard on fedora now. portaudio support is
 # beta (and causes crashes), sdl is rarely used (?).
-BuildRequires:  jack-audio-connection-kit-devel
-BuildRequires:  alsa-lib-devel
-BuildRequires:  pulseaudio-libs-devel
-BuildRequires:  libsamplerate-devel
-BuildRequires:  libsndfile-devel
-BuildRequires:  fftw3-devel
-BuildRequires:  fluidsynth-devel
-BuildRequires:  libvorbis-devel
-BuildRequires:  libogg-devel
-BuildRequires:  ladspa-devel
-BuildRequires:  stk-devel
-BuildRequires:  qt4-devel
-BuildRequires:  fltk-devel
-BuildRequires:  cmake
-BuildRequires:  desktop-file-utils
-
+BuildRequires: jack-audio-connection-kit-devel
+BuildRequires: alsa-lib-devel
+BuildRequires: pulseaudio-libs-devel
+BuildRequires: libsamplerate-devel
+BuildRequires: libsndfile-devel
+BuildRequires: fftw3-devel
+BuildRequires: fluidsynth-devel
+BuildRequires: libvorbis-devel
+BuildRequires: libogg-devel
+BuildRequires: ladspa-devel
+BuildRequires: stk-devel
+BuildRequires: qt4-devel
+BuildRequires: fltk-devel
+BuildRequires: cmake
+BuildRequires: desktop-file-utils
+BuildRequires: fltk-fluid
+BuildRequires: fltk-devel
 %ifarch %ix86
-BuildRequires:  wine-devel 
+BuildRequires: wine-devel 
 %endif
 
-Requires:       ladspa-caps-plugins
-Requires:       ladspa-tap-plugins
-Requires:       ladspa-swh-plugins
-Requires:       ladspa-calf-plugins
+Requires:      ladspa-caps-plugins
+Requires:      ladspa-tap-plugins
+Requires:      ladspa-swh-plugins
+Requires:      ladspa-calf-plugins
 # the version included in lmms contains patches sent to, but not yet
 # applied by cmt's upstream.
 #Requires: ladspa-cmt-plugins
@@ -112,19 +117,16 @@ Requires:       %{name} = %{version}-%{release}
 The %{name}-devel package contains header files for
 developing addons for %{name}.
 
-
 # rpath needed e.g. for /usr/libexec/RemoteZynAddSubFx
 %global _cmake_skip_rpath %{nil}
 
-
 %prep
-%setup0 -q
+%setup -qn %{name}-%{commit0}
 %patch0 -p1 -b .libexecdir
 %patch1 -p1 -b .nowine
 
 # remove spurious x-bits
 find . -type f -exec chmod 0644 {} \;
-
 
 %build
 %cmake \
@@ -146,7 +148,6 @@ find . -type f -exec chmod 0644 {} \;
        -DLIBEXEC_INSTALL_DIR=%{_libexecdir} \
        .
 make VERBOSE=1 %{?_smp_mflags}
-
 
 %install
 make DESTDIR=%{buildroot} install

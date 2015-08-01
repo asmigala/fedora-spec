@@ -10,6 +10,7 @@ BuildRoot:     %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires: alsa-lib-devel
 BuildRequires: jack-audio-connection-kit-devel
+BuildRequires: zita-alsa-pcmi-devel
 
 %description
 %{name} alsa / jack midi bridge.
