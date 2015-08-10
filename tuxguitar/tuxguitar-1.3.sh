@@ -29,7 +29,7 @@ CLASSPATH=${CLASSPATH}:/usr/share/java/tuxguitar/swt.jar
 CLASSPATH=${CLASSPATH}:/usr/share/java/tuxguitar/itext-pdf.jar
 CLASSPATH=${CLASSPATH}:/usr/share/java/tuxguitar/itext-xmlworker.jar
 ##MAINCLASS
-MAINCLASS=org.herac.tuxguitar.app.TGMain
+MAINCLASS=org.herac.tuxguitar.app.TGMainSingleton
 ##JVM ARGUMENTS
 VM_ARGS="-Xmx512m"
 ##EXPORT VARS
