@@ -5,10 +5,10 @@ Release:          1%{?dist}
 
 # The source for this package was pulled from upstream's vcs.  Use the
 # following commands to generate the tarball:
-#  svn export -r 1182 http://svn.code.sf.net/p/tuxguitar/code/trunk tuxguitar-1.3-1182
-#  tar -czvf tuxguitar-1.3-1182.tar.gz tuxguitar-1.3-1182
+#  svn export -r 1312 http://svn.code.sf.net/p/tuxguitar/code/trunk tuxguitar-1.3-1312
+#  tar -czvf tuxguitar-1.3-1312.tar.gz tuxguitar-1.3-1312
 URL:              http://tuxguitar.sourceforge.com
-Source0:          tuxguitar-1.3-1182.tar.gz
+Source0:          tuxguitar-1.3-1312.tar.gz
 Source1:          tuxguitar-1.3.sh
 License:          LGPLv2+
 Group:            Applications/Multimedia
@@ -37,7 +37,7 @@ hammer-on/pull-off effects, support for tuplets, time signature management,
 tempo management, gp3/gp4/gp5/gp6 import and export.
 
 %prep
-%setup -q -n tuxguitar-1.3-1182
+%setup -q -n tuxguitar-1.3-1312
 
 %build
 
@@ -149,7 +149,8 @@ cd build-scripts/tuxguitar-linux-x86_64/target/tuxguitar-1.3-SNAPSHOT-linux-x86_
 %__cp -r share/scales/*    %{buildroot}/%{_datadir}/%{name}/scales/
 %__cp -r share/skins/*     %{buildroot}/%{_datadir}/%{name}/skins/
 %__cp -r share/templates/* %{buildroot}/%{_datadir}/%{name}/templates/
-
+# Under FC22, the java sound plugin make tuxguitar freezes.
+%__rm share/plugins/tuxguitar-jsa.jar
 #chmod 555 %{buildroot}/%{_bindir}/
 #chmod 555 %{buildroot}/%{_libdir}/
 
