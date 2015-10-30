@@ -63,17 +63,17 @@ fi
 /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 %files
-%{_bindir}/
-%{_includedir}/carla
-%{_libdir}/carla
-%{_libdir}/lv2
-%{_libdir}/pkgconfig
-%{_libdir}/python3
-%{_libdir}/vst
-%{_datadir}/applications
-%{_datadir}/carla
-%{_datadir}/icons
-%{_datadir}/mime
+%{_bindir}/*
+%{_includedir}/carla/*
+%{_libdir}/carla/*
+%{_libdir}/lv2/*
+%{_libdir}/pkgconfig/*
+%{_libdir}/python3/*
+%{_libdir}/vst/
+%{_datadir}/applications/*
+%{_datadir}/carla/*
+%{_datadir}/icons/*
+%{_datadir}/mime/*
 
 %changelog
 * Sat Jun 06 2015 Yann Collette <ycollette.nospam@free.fr> - 2.0.0beta

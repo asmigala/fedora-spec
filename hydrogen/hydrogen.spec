@@ -1,5 +1,5 @@
 Name:         hydrogen
-Version:      0.9.6
+Version:      0.9.7
 Release:      11%{?dist}
 Summary:      Advanced drum machine for GNU/Linux
 URL:          http://www.hydrogen-music.org/
@@ -31,9 +31,10 @@ BuildRequires: rubberband-devel
 BuildRequires: cmake
 BuildRequires: scons
 BuildRequires: desktop-file-utils
+BuildRequires: filesystem
 
 %description
-Hydrogen is an advanced drum machine for GNU/Linux. It's main goal is to bring 
+Hydrogen is an advanced drum machine for GNU/Linux. The main goal is to bring 
 professional yet simple and intuitive pattern-based drum programming.
 
 %package -n ladspa-wasp-booster
@@ -90,11 +91,12 @@ qmake-qt4 src/plugins/plugins.pro
 make -f src/plugins/Makefile
 
 %install
+
 make DESTDIR=%{buildroot} install
 
 #Install the wasp plugins
-mkdir -p $RPM_BUILD_ROOT%{_libdir}/ladspa
-cp -a libwasp*.so $RPM_BUILD_ROOT%{_libdir}/ladspa/
+%__install -m 755 -d %{buildroot}%{_libdir}/ladspa/
+%__install -m 644 libwasp*.so %{buildroot}%{_libdir}/ladspa/
 
 # install hydrogen.desktop properly.
 desktop-file-install --vendor '' \
@@ -109,7 +111,6 @@ desktop-file-install --vendor '' \
 %post
 touch --no-create %{_datadir}/mime/packages &>/dev/null || :
 update-desktop-database &> /dev/null || :
-
 
 %postun
 update-desktop-database &> /dev/null || :
@@ -130,7 +131,7 @@ fi
 %{_bindir}/h2synth
 %{_datadir}/hydrogen/
 %{_datadir}/applications/hydrogen.desktop
-%{_libdir}/
+%{_libdir}/*.so
 %exclude %{_includedir}/%{name}
 
 %files -n ladspa-wasp-booster

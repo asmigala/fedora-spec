@@ -43,9 +43,9 @@ cd build-sisco.lv2
 make DESTDIR=%{buildroot} PREFIX=/usr LIBDIR=lib64 sisco_VERSION=%{version} %{?_smp_mflags} install
 
 %files
-%{_bindir}
-%{_libdir}/lv2
-%{_datadir}
+%{_bindir}/*
+%{_libdir}/lv2/*
+%{_datadir}/*
 
 %changelog
 * Sat Jun 06 2015 Yann Collette <ycollette.nospam@free.fr> - 0.6.7

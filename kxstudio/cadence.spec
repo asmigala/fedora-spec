@@ -50,11 +50,11 @@ fi
 /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 %files
-%{_bindir}/
-%{_datadir}/applications
-%{_datadir}/cadence
-%{_datadir}/icons
-%{_sysconfdir}/
+%{_bindir}/*
+%{_datadir}/applications/*
+%{_datadir}/cadence/*
+%{_datadir}/icons/*
+%{_sysconfdir}/*
 
 %changelog
 * Sat Jun 06 2015 Yann Collette <ycollette.nospam@free.fr> - master

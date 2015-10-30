@@ -1,10 +1,10 @@
 # Global variables for github repository
-%global commit0 d14f4511b2235906ad66c375ed9d4ad34db0283c
-%global gittag0 v1.1.3
+%global commit0 893cef6b0b31988f25f735a9831d379afd96fd18
+%global gittag0 master
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 
 Name:           lmms
-Version:        1.1.3
+Version:        master
 Release:        1%{?dist}
 Summary:        Linux MultiMedia Studio
 URL:            http://lmms.sourceforge.net/
@@ -36,11 +36,11 @@ License:        GPLv2+ and GPLv2 and (GPLv2+ or MIT) and GPLv3+ and MIT and LGPL
 Source0:        https://github.com/lmms/%{name}/archive/%{commit0}.tar.gz#/%{name}-%{shortcommit0}.tar.gz
 
 # move the vst and zynaddsubfx plugins to libexecdir.
-Patch0:         lmms-1.1.3-libexecdir.patch
+#Patch0:         lmms-1.1.3-libexecdir.patch
 
 # build with vst support but without having wine. that is a tiny patch
 # upstream isn't really interested in.
-Patch1:         lmms-1.1.3-vst-nowine.patch
+#Patch1:         lmms-1.1.3-vst-nowine.patch
 
 # according to upstream we should at least support oss, alsa, and
 # jack. output via pulseaudio has high latency, but we enable it
@@ -63,6 +63,7 @@ BuildRequires: cmake
 BuildRequires: desktop-file-utils
 BuildRequires: fltk-fluid
 BuildRequires: fltk-devel
+BuildRequires: Carla
 %ifarch %ix86
 BuildRequires: wine-devel 
 %endif
@@ -122,8 +123,8 @@ developing addons for %{name}.
 
 %prep
 %setup -qn %{name}-%{commit0}
-%patch0 -p1 -b .libexecdir
-%patch1 -p1 -b .nowine
+#%patch0 -p1 -b .libexecdir
+#%patch1 -p1 -b .nowine
 
 # remove spurious x-bits
 find . -type f -exec chmod 0644 {} \;
@@ -136,6 +137,7 @@ find . -type f -exec chmod 0644 {} \;
        -DWANT_TAP:BOOL=OFF \
        -DWANT_SWH:BOOL=OFF \
        -DWANT_CALF:BOOL=OFF \
+       -DWANT_CARLA:BOOL=ON \
 %ifarch %ix86
        -DWANT_VST:BOOL=ON \
 %else
@@ -177,10 +179,10 @@ fi
 
 
 %files
-%doc AUTHORS COPYING README TODO
+#%doc AUTHORS COPYING README TODO
 %{_bindir}/%{name}
 %{_libdir}/%{name}
-%{_libexecdir}/RemoteZynAddSubFx
+#%{_libexecdir}/RemoteZynAddSubFx
 %{_datadir}/%{name}
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/mime/packages/%{name}.xml

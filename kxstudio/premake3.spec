@@ -26,7 +26,7 @@ rm -rf %{buildroot}
 %files
 %defattr(-,root,root,-)
 %doc CHANGES.txt LICENSE.txt README.txt
-%{_bindir}/
+%{_bindir}/*
 
 %changelog
 * Fri Jun 19 2015 Yann Collette <ycollette.nospam@free.fr> - 3.7-1

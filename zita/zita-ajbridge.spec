@@ -37,7 +37,7 @@ rm -rf %{buildroot}
 %files
 %defattr(-,root,root,-)
 %doc AUTHORS COPYING
-%{_bindir}/
+%{_bindir}/*
 
 %changelog
 * Fri Jun 19 2015 Yann Collette <ycollette.nospam@free.fr> - 0.4.0-1

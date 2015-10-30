@@ -1,5 +1,5 @@
 # Global variables for github repository
-%global commit0 86ee95743b4d698cfde08d0846313b79ac134153
+%global commit0 ad798d4a0a2e7db52e1a7451176ff198a393cdb4
 %global gittag0 master
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 
@@ -52,9 +52,9 @@ fi
 /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 %files
-%{_bindir}/
-%{_libdir}/lv2
-%{_datadir}/helm
+%{_bindir}/*
+%{_libdir}/lv2/*
+%{_datadir}/helm/*
 
 %changelog
 * Sat Jun 06 2015 Yann Collette <ycollette.nospam@free.fr> - 1.0.0beta

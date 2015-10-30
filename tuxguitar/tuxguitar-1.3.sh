@@ -3,6 +3,7 @@
 DIR_NAME=`dirname "$0"`
 DIR_NAME=`cd "$DIR_NAME"; pwd`
 cd "${DIR_NAME}"
+TUXNAME=tuxguitar3
 ##JAVA
 if [ -z $JAVA ]; then
     JAVA=${JAVA_HOME}/bin/java
@@ -20,14 +21,16 @@ LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${MOZILLA_FIVE_HOME}
 LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/lib
 LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/lib64
 ##CLASSPATH
-CLASSPATH=${CLASSPATH}:/usr/share/java/tuxguitar/
-CLASSPATH=${CLASSPATH}:/usr/share/tuxguitar/plugins/
-CLASSPATH=${CLASSPATH}:/usr/share/java/tuxguitar/tuxguitar.jar
-CLASSPATH=${CLASSPATH}:/usr/share/java/tuxguitar/tuxguitar-lib.jar
-CLASSPATH=${CLASSPATH}:/usr/share/java/tuxguitar/tuxguitar-gm-utils.jar
-CLASSPATH=${CLASSPATH}:/usr/share/java/tuxguitar/swt.jar
-CLASSPATH=${CLASSPATH}:/usr/share/java/tuxguitar/itext-pdf.jar
-CLASSPATH=${CLASSPATH}:/usr/share/java/tuxguitar/itext-xmlworker.jar
+CLASSPATH=${CLASSPATH}:/usr/share/java/${TUXNAME}/
+CLASSPATH=${CLASSPATH}:/usr/share/${TUXNAME}/plugins/
+CLASSPATH=${CLASSPATH}:/usr/share/java/${TUXNAME}/tuxguitar.jar
+CLASSPATH=${CLASSPATH}:/usr/share/java/${TUXNAME}/tuxguitar-lib.jar
+CLASSPATH=${CLASSPATH}:/usr/share/java/${TUXNAME}/tuxguitar-gm-utils.jar
+CLASSPATH=${CLASSPATH}:/usr/share/java/${TUXNAME}/tuxguitar-awt-graphics.jar
+CLASSPATH=${CLASSPATH}:/usr/share/java/${TUXNAME}/tuxguitar-editor-utils.jar
+CLASSPATH=${CLASSPATH}:/usr/share/java/${TUXNAME}/swt.jar
+CLASSPATH=${CLASSPATH}:/usr/share/java/${TUXNAME}/itext-pdf.jar
+CLASSPATH=${CLASSPATH}:/usr/share/java/${TUXNAME}/itext-xmlworker.jar
 ##MAINCLASS
 MAINCLASS=org.herac.tuxguitar.app.TGMainSingleton
 ##JVM ARGUMENTS
@@ -38,4 +41,4 @@ export LD_LIBRARY_PATH
 export MOZILLA_FIVE_HOME
 
 ##LAUNCH
-${JAVA} ${VM_ARGS} -cp :${CLASSPATH} -Dtuxguitar.share.path="/usr/share/tuxguitar" -Djava.library.path="${LD_LIBRARY_PATH}" ${MAINCLASS} "$1" "$2"
+${JAVA} ${VM_ARGS} -cp :${CLASSPATH} -Dtuxguitar.share.path="/usr/share/${TUXNAME}" -Djava.library.path="${LD_LIBRARY_PATH}" ${MAINCLASS} "$1" "$2"

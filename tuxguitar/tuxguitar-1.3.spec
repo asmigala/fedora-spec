@@ -1,5 +1,5 @@
 Summary:          A multitrack tablature editor and player written in Java-SWT
-Name:             tuxguitar
+Name:             tuxguitar3
 Version:          1.3
 Release:          1%{?dist}
 
@@ -10,6 +10,7 @@ Release:          1%{?dist}
 URL:              http://tuxguitar.sourceforge.com
 Source0:          tuxguitar-1.3-1312.tar.gz
 Source1:          tuxguitar-1.3.sh
+Source2:          tuxguitar3.desktop
 License:          LGPLv2+
 Group:            Applications/Multimedia
 
@@ -99,17 +100,18 @@ SentUpstream: 2014-09-22
 EOF
 
 %__install -m 755 -d %{buildroot}/%{_datadir}/applications/
-%__install -m 644 misc/%{name}.desktop %{buildroot}%{_datadir}/applications/
+#%__install -m 644 misc/tuxguitar.desktop %{buildroot}%{_datadir}/applications/%{name}.desktop
+%__install -m 644 %{SOURCE2} %{buildroot}%{_datadir}/applications/%{name}.desktop
 
 %__install -m 755 -d %{buildroot}/%{_datadir}/mime/packages/
-%__install -m 644 misc/%{name}.xml %{buildroot}%{_datadir}/mime/packages/
+%__install -m 644 misc/tuxguitar.xml %{buildroot}%{_datadir}/mime/packages/%{name}.xml
 
 %__install -m 755 -d %{buildroot}/%{_datadir}/icons/hicolor/32x32/apps/
-%__install -m 644 misc/%{name}.xpm %{buildroot}/%{_datadir}/icons/hicolor/32x32/apps/
+%__install -m 644 misc/tuxguitar.xpm %{buildroot}/%{_datadir}/icons/hicolor/32x32/apps/%{name}.xpm
 
 %__install -m 755 -d %{buildroot}/%{_bindir}/
 %__install -m 755 %{SOURCE1} %{buildroot}/%{_bindir}/
-mv %{buildroot}/%{_bindir}/tuxguitar-1.3.sh %{buildroot}/%{_bindir}/tuxguitar
+mv %{buildroot}/%{_bindir}/tuxguitar-1.3.sh %{buildroot}/%{_bindir}/%{name}
 
 cd build-scripts/tuxguitar-linux-x86_64/target/tuxguitar-1.3-SNAPSHOT-linux-x86_64/
 
@@ -143,16 +145,15 @@ cd build-scripts/tuxguitar-linux-x86_64/target/tuxguitar-1.3-SNAPSHOT-linux-x86_
 %__install -m 755 -d %{buildroot}/%{_datadir}/%{name}/skins/Oxygen/
 %__install -m 755 -d %{buildroot}/%{_datadir}/%{name}/templates/
 
-%__cp -r share/help/       %{buildroot}/%{_datadir}/%{name}/help/
+# Under FC22, the java sound plugin make tuxguitar freezes.
+%__rm share/plugins/tuxguitar-jsa.jar
+
+%__cp -r share/help/*      %{buildroot}/%{_datadir}/%{name}/help/
 %__cp -r share/lang/*      %{buildroot}/%{_datadir}/%{name}/lang/
 %__cp -r share/plugins/*   %{buildroot}/%{_datadir}/%{name}/plugins/
 %__cp -r share/scales/*    %{buildroot}/%{_datadir}/%{name}/scales/
 %__cp -r share/skins/*     %{buildroot}/%{_datadir}/%{name}/skins/
 %__cp -r share/templates/* %{buildroot}/%{_datadir}/%{name}/templates/
-# Under FC22, the java sound plugin make tuxguitar freezes.
-%__rm share/plugins/tuxguitar-jsa.jar
-#chmod 555 %{buildroot}/%{_bindir}/
-#chmod 555 %{buildroot}/%{_libdir}/
 
 cd ../..
 
@@ -167,9 +168,9 @@ update-desktop-database &> /dev/null
 
 %postun
 if [ $1 -eq 0 ] ; then
-   touch --no-create %{_datadir}/icons/hicolor &>/dev/null
+   touch --no-create     %{_datadir}/icons/hicolor &>/dev/null
    gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null
-   update-mime-database %{_datadir}/mime >& /dev/null ||:
+   update-mime-database  %{_datadir}/mime >& /dev/null ||:
 fi
 update-desktop-database &> /dev/null
 

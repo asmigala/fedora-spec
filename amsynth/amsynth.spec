@@ -68,15 +68,15 @@ XTRA="X-Synthesis X-MIDI X-Jack"
 %defattr(-,root,root,-)
 %doc AUTHORS ChangeLog COPYING INSTALL NEWS README
 %{_bindir}/amsynth
-%{_datadir}/amsynth
+%{_datadir}/amsynth/*
 %{_datadir}/applications/*%{name}.desktop
 %{_datadir}/pixmaps/amsynth.png
 
 %files -n dssi-amsynth
-%{_libdir}/dssi
+%{_libdir}/dssi/*
 
 %files -n lv2-amsynth
-%{_libdir}/lv2
+%{_libdir}/lv2/*
 
 %changelog
 * Thu Jun 04 2015 Yann Collette <ycollette dot nospam at free.fr> 1.5.1-1
