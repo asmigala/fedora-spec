@@ -23,7 +23,7 @@ BuildRequires: libvorbis-devel
 BuildRequires: libogg-devel 
 
 %description
-olyphone is a free software for editing soundfonts in format sf2. These files contain a multitude of audio samples put together and configured so as to form musical instruments that can be used by synthesizers such as fluidsynth and played using a MIDI keyboard.
+Polyphone is a free software for editing soundfonts in format sf2. These files contain a multitude of audio samples put together and configured so as to form musical instruments that can be used by synthesizers such as fluidsynth and played using a MIDI keyboard.
 The goal of Polyphone is to provide:
 
 * a simple and efficient interface for creating and editing .sf2 files, available on Windows, Mac OS X and Linux, tools to facilitate and automate the editing of different parameters, making it possible to handle a large amount of data.
