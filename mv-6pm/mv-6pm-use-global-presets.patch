@@ -1,0 +1,13 @@
+diff --git a/MVGlobals.cpp b/MVGlobals.cpp
+index bb46ba8..e96283a 100644
+--- a/MVGlobals.cpp
++++ b/MVGlobals.cpp
+@@ -21,7 +21,7 @@
+ 
+ #include <QDir>
+ 
+-QString Globals::userDir = QDir::homePath() + "/.6pm";
++QString Globals::userDir = "/usr/share/mv-6pm";
+ QString Globals::userPresetsDir = userDir + "/Presets";
+ QString Globals::userMidiMapsDir = userDir + "/MidiMaps";
+ 
