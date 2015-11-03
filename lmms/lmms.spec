@@ -1,10 +1,10 @@
 # Global variables for github repository
-%global commit0 893cef6b0b31988f25f735a9831d379afd96fd18
-%global gittag0 master
+%global commit0 d14f4511b2235906ad66c375ed9d4ad34db0283c
+%global gittag0 v1.1.3
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 
 Name:           lmms
-Version:        master
+Version:        1.1.3
 Release:        1%{?dist}
 Summary:        Linux MultiMedia Studio
 URL:            http://lmms.sourceforge.net/
@@ -35,6 +35,10 @@ License:        GPLv2+ and GPLv2 and (GPLv2+ or MIT) and GPLv3+ and MIT and LGPL
 # original tarfile can be found here:
 Source0:        https://github.com/lmms/%{name}/archive/%{commit0}.tar.gz#/%{name}-%{shortcommit0}.tar.gz
 
+Patch0: lmms-1.1.3-0001-fix-gcc-5.patch
+Patch1: lmms-1.1.3-0002-fix-case-carla.patch
+Patch2: lmms-1.1.3-0003-fix-lib64-carla.patch
+
 # move the vst and zynaddsubfx plugins to libexecdir.
 #Patch0:         lmms-1.1.3-libexecdir.patch
 
@@ -46,6 +50,7 @@ Source0:        https://github.com/lmms/%{name}/archive/%{commit0}.tar.gz#/%{nam
 # jack. output via pulseaudio has high latency, but we enable it
 # nevertheless as it is standard on fedora now. portaudio support is
 # beta (and causes crashes), sdl is rarely used (?).
+
 BuildRequires: jack-audio-connection-kit-devel
 BuildRequires: alsa-lib-devel
 BuildRequires: pulseaudio-libs-devel
@@ -123,6 +128,11 @@ developing addons for %{name}.
 
 %prep
 %setup -qn %{name}-%{commit0}
+
+%patch0 -p1 
+%patch1 -p1
+%patch2 -p1
+
 #%patch0 -p1 -b .libexecdir
 #%patch1 -p1 -b .nowine
 
