@@ -477,6 +477,7 @@ jack-rack
 ladspa
 helm
 DISTRHO-Ports
+mv-6pm
 
 # ladpsa plugins
 ladspa-amb-plugins
