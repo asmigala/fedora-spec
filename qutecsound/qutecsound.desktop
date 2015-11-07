@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Name=qutecsound
+Comment=Edit csound files
+Comment[fr]=Edite les fichiers csound
+Exec=qutecsound
+Icon=qutecsound
+Terminal=false
+Type=Application
+Categories=Audio;AudioVideo;
+MimeType=audio/x-qutecsound;audio/midi;
