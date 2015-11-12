@@ -36,4 +36,5 @@ This is the content of the repo conf file found in /etc/yum.repo.d.
 
 ToDo:
 - Add Requires in kxstudio
-
+- Fix portalmod / swh build
+- Fix portalmod / mda build
