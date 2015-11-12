@@ -16,10 +16,9 @@ Source0:        https://github.com/portalmod/%{name}/archive/%{commit0}.tar.gz#/
 BuildRequires: lv2-devel
 BuildRequires: fftw-devel
 BuildRequires: fftw
-BuildRequires: python
-BuildRequires: python-mpmath
 BuildRequires: python3
 BuildRequires: python3-mpmath
+BuildRequires: armadillo-devel
 
 %description
 mod-pitchshifter LV2 set of plugins from portalmod
