@@ -38,6 +38,8 @@ Source0:        https://github.com/lmms/%{name}/archive/%{commit0}.tar.gz#/%{nam
 Patch0: lmms-1.1.3-0001-fix-gcc-5.patch
 Patch1: lmms-1.1.3-0002-fix-case-carla.patch
 Patch2: lmms-1.1.3-0003-fix-lib64-carla.patch
+Patch3: lmms-1.1.3-0004-fix-swh-compilation.patch
+Patch4: lmms-1.1.3-0005-fix-carla-plugin-loading.patch
 
 # move the vst and zynaddsubfx plugins to libexecdir.
 #Patch0:         lmms-1.1.3-libexecdir.patch
@@ -132,6 +134,8 @@ developing addons for %{name}.
 %patch0 -p1 
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
+%patch4 -p1
 
 #%patch0 -p1 -b .libexecdir
 #%patch1 -p1 -b .nowine
