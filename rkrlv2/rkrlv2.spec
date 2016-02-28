@@ -18,8 +18,8 @@ Source0:        https://github.com/ssj71/%{name}/archive/%{commit0}.tar.gz#/%{na
 Patch0:         rkrlv2-0001-custom-install-path.patch
 
 BuildRequires: lv2-devel
-#pkg_check_modules(SAMPLERATE REQUIRED samplerate>=0.1.5)
-#pkg_check_modules(FFTW  REQUIRED fftw3)
+BuildRequires: libsamplerate-devel
+BuildRequires: fftw-devel
 
 %description
 This project is the rakarrack effects ported to LV2 plugins.
