@@ -34,6 +34,11 @@ enabled_metadata=1
 
 This is the content of the repo conf file found in /etc/yum.repo.d.
 
+To create the LiveCD:
+
+As a root used:
+$ livecd-creator --verbose --config=fedora-23-live-jam-kde.ks --fslabel=LesCuizines
+
 ToDo:
 - Add Requires in kxstudio
 - Fix portalmod / swh build
