@@ -20,6 +20,7 @@ Patch0:         rkrlv2-0001-custom-install-path.patch
 BuildRequires: lv2-devel
 BuildRequires: libsamplerate-devel
 BuildRequires: fftw-devel
+BuildRequires: cmake
 
 %description
 This project is the rakarrack effects ported to LV2 plugins.
