@@ -1,3 +1,6 @@
+# Disable production of debug package. Problem with fedora 23
+%global debug_package %{nil}
+
 Name:         mv-6pm
 Version:      0.5.0
 Release:      1%{?dist}

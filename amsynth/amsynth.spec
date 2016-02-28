@@ -1,5 +1,5 @@
 # Global variables for github repository
-%global commit0 d394e832b24ec80ac4e2fc6ec9cbbc5508196bb1
+%global commit0 0b7f204de0ff6d54938962bce1097f703d11e582
 %global gittag0 master
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 
@@ -37,6 +37,13 @@ Group:          Applications/Multimedia
 %description -n lv2-amsynth
 Amsynth LV2 plugin
 
+%package -n vst-amsynth
+Summary:        amsynth vst plugin
+Group:          Applications/Multimedia
+
+%description -n vst-amsynth
+Amsynth VST plugin
+
 %package -n dssi-amsynth
 Summary:        amsynth DSSI plugin
 Group:          Applications/Multimedia
@@ -49,6 +56,7 @@ Amsynth DSSI plugin
 
 %build
 autoreconf --force --install
+export CXXFLAGS="-fPIC -std=c++11"
 %configure
 %{__make} %{_smp_mflags}
 
@@ -70,13 +78,17 @@ XTRA="X-Synthesis X-MIDI X-Jack"
 %{_bindir}/amsynth
 %{_datadir}/amsynth/*
 %{_datadir}/applications/*%{name}.desktop
-%{_datadir}/pixmaps/amsynth.png
+%{_datadir}/icons/hicolor/48x48/apps/amsynth.png
+%{_datadir}/icons/hicolor/scalable/apps/amsynth.svg
 
 %files -n dssi-amsynth
 %{_libdir}/dssi/*
 
 %files -n lv2-amsynth
 %{_libdir}/lv2/*
+
+%files -n vst-amsynth
+%{_libdir}/vst/*
 
 %changelog
 * Thu Jun 04 2015 Yann Collette <ycollette dot nospam at free.fr> 1.5.1-1

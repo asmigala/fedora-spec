@@ -64,7 +64,10 @@ sed -i -e "s/Sound/X-Sound/g" linux/hydrogen.desktop
 %patch1 -p1 -b .nodevver
 
 %build
-%cmake \
+
+%cmake -DCMAKE_C_FLAGS:STRING=-fPIC \
+       -DCMAKE_CXX_FLAGS:STRING=-fPIC \
+       -DCMAKE_EXE_LINKER_FLAGS:STRING=-fPIC \
        -DWANT_ALSA:BOOL=ON \
        -DWANT_CPPUNIT:BOOL=OFF \
        -DWANT_DEBUG:BOOL=OFF \

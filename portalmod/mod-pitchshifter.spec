@@ -1,7 +1,10 @@
 # Global variables for github repository
-%global commit0 867ebc6897c236518315835018c72ce311511d5d
+%global commit0 6f7970ad5759e1203c2ea56eb11af0287d96966f
 %global gittag0 master
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
+
+# Disable production of debug package. Problem with fedora 23
+%global debug_package %{nil}
 
 Name:           mod-pitchshifter
 Version:        0.9

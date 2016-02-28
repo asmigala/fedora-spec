@@ -1,9 +1,12 @@
 # http://www.iannix.org/
 
 # Global variables for github repository
-%global commit0 403120082b19950dff3187eaaf44454b36f37109
+%global commit0 f84becdcbe154b20a53aa2622068cb8f6fda0755
 %global gittag0 master
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
+
+# Disable production of debug package. Problem with fedora 23
+%global debug_package %{nil}
 
 Name:         IanniX
 Version:      0.9.16

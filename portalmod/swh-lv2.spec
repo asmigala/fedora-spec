@@ -3,6 +3,9 @@
 %global gittag0 master
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 
+# Disable production of debug package. Problem with fedora 23
+%global debug_package %{nil}
+
 Name:           swh-lv2
 Version:        0.9
 Release:        1%{?dist}
@@ -22,7 +25,8 @@ SWH LV2 set of plugins from portalmod
 %setup -qn %{name}-%{commit0}
 
 %build
-make INSTALL_PATH=%{buildroot}%{_libdir}/lv2 %{?_smp_mflags}
+#make INSTALL_PATH=%{buildroot}%{_libdir}/lv2 %{?_smp_mflags}
+make %{?_smp_mflags}
 
 %install 
 make INSTALL_PATH=%{buildroot}%{_libdir}/lv2 %{?_smp_mflags} install

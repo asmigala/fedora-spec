@@ -1,7 +1,10 @@
 # Global variables for github repository
-%global commit0 f8b18cff1d3bd24fbf666abb27ecc08785b67617
+%global commit0 dea02f6421f040f70377e13501ccee1b5d9e0658
 %global gittag0 master
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
+
+# Disable production of debug package. Problem with fedora 23
+%global debug_package %{nil}
 
 Name:           Cadence
 Version:        master

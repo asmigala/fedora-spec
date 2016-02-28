@@ -1,7 +1,10 @@
 # Global variables for github repository
-%global commit0 c9ab28b9f86ba1052162892bf310018d3540035f
+%global commit0 7bcbc9bf43f8acc273d3007345ac1985ba54f9a4
 %global gittag0 master
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
+
+# Disable production of debug package. Problem with fedora 23
+%global debug_package %{nil}
 
 Name:           DISTRHO-Ports
 Version:        1.0.0

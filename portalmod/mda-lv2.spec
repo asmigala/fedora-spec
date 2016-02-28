@@ -1,5 +1,5 @@
 # Global variables for github repository
-%global commit0 ba1380a305d1fc03142a15a251cfefbd0e68147b
+%global commit0 3d6dd099146b72c1fe88e06679034715fb999a5b
 %global gittag0 master
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 
@@ -27,7 +27,7 @@ MDA LV2 set of plugins synth from portalmod
 ./waf
 
 %install 
-./waf install
+./waf -j1 install
 
 %files
 %{_libdir}/lv2/*

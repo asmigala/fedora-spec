@@ -145,7 +145,7 @@ find . -type f -exec chmod 0644 {} \;
        -DWANT_PORTAUDIO:BOOL=OFF \
        -DWANT_CAPS:BOOL=OFF \
        -DWANT_TAP:BOOL=OFF \
-       -DWANT_SWH:BOOL=OFF \
+       -DWANT_SWH:BOOL=ON \
        -DWANT_CALF:BOOL=OFF \
        -DWANT_CARLA:BOOL=ON \
 %ifarch %ix86
