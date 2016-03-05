@@ -12,6 +12,7 @@ URL:            http://www.cockos.com/ninjam/
 Source0:        http://www.cockos.com/ninjam/downloads/src/ninjam_server_0.06.tar.gz
 
 BuildRequires:  ncurses-devel
+BuildRequires:  alsa-lib-devel
 BuildRequires:  libvorbis-devel
 
 %description

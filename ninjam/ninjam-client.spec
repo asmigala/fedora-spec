@@ -13,6 +13,7 @@ Source0:        http://www.cockos.com/ninjam/downloads/src/cclient_src_v0.01a.ta
 
 BuildRequires:  ncurses-devel
 BuildRequires:  alsa-lib-devel
+BuildRequires:  libvorbis-devel
 
 %description
 A realtime network sound client
