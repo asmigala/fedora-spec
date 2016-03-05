@@ -35,7 +35,7 @@ CsoundQt is a frontend for Csound featuring a highlighting editor with autocompl
 # CSOUND_INCLUDE_DIR
 # CSOUND_LIBRARY_DIR
 
-qmake-qt4 CSOUND_LIBRARY_DIR=/usr/lib64 qcs.pro
+qmake-qt4 CSOUND_LIBRARY_DIR=/usr/%{_lib} qcs.pro
 make VERBOSE=1 %{?_smp_mflags}
 cd ..
 

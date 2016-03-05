@@ -40,10 +40,10 @@ A rack manager for JACK
 %setup -qn %{name}-%{commit0}
 
 %build
-make DESTDIR=%{buildroot} PREFIX=/usr LIBDIR=/usr/lib64 %{?_smp_mflags}
+make DESTDIR=%{buildroot} PREFIX=/usr LIBDIR=%{_libdir} %{?_smp_mflags}
 
 %install 
-make DESTDIR=%{buildroot} PREFIX=/usr LIBDIR=/usr/lib64  %{?_smp_mflags} install
+make DESTDIR=%{buildroot} PREFIX=/usr LIBDIR=%{_libdir}  %{?_smp_mflags} install
 
 # Create a vst directory
 %__install -m 755 -d %{buildroot}/%{_libdir}/vst/

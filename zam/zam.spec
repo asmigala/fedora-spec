@@ -41,10 +41,10 @@ Zam VST plugin
 %setup -qn %{name}-%{commit0}
 
 %build
-make DESTDIR=%{buildroot} PREFIX=/usr LIBDIR=lib64 HAVE_DGL=1 %{?_smp_mflags}
+make DESTDIR=%{buildroot} PREFIX=/usr LIBDIR=%{_lib} HAVE_DGL=1 %{?_smp_mflags}
 
 %install 
-make DESTDIR=%{buildroot} PREFIX=/usr LIBDIR=lib64 HAVE_DGL=1 %{?_smp_mflags} install
+make DESTDIR=%{buildroot} PREFIX=/usr LIBDIR=%{_lib} HAVE_DGL=1 %{?_smp_mflags} install
 
 %files
 %{_libdir}/lv2/*
