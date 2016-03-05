@@ -18,6 +18,7 @@ BuildRequires: libsamplerate-devel
 BuildRequires: libsndfile-devel
 BuildRequires: lv2-devel
 BuildRequires: expat-devel
+BuildRequires: cmake
 
 %description
 A drum LV2 plugin
