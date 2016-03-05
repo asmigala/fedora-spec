@@ -21,7 +21,7 @@ To enable a thirdparty repository, you must add it to /etc/mock/fedora-22-x86_64
 
 $ mock -r fedora-22-x86_64 --enablerepo=ycollet-linuxmao --rebuild dgedit-0.1-1.fc22.src.rpm
 
-The portion added to /etc/mock/fedora-22-x86_64.cfg is:
+The portion added to /etc/mock/fedora-2{1,2,3}-x86_64.cfg is:
 
 [ycollet-linuxmao]
 name=Copr repo for linuxmao owned by ycollet
@@ -31,6 +31,17 @@ gpgcheck=1
 gpgkey=https://copr-be.cloud.fedoraproject.org/results/ycollet/linuxmao/pubkey.gpg
 enabled=1
 enabled_metadata=1
+
+[rpmfusion-free]
+name=RPM Fusion for Fedora $releasever - Free
+#baseurl=http://download1.rpmfusion.org/free/fedora/releases/$releasever/Everything/$basearch/os/
+mirrorlist=http://mirrors.rpmfusion.org/mirrorlist?repo=free-fedora-$releasever&arch=$basearch
+enabled=1
+metadata_expire=604800
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-rpmfusion-free-fedora-$releasever
+skip_if_unavailable = 1
+keepcache = 0
 
 This is the content of the repo conf file found in /etc/yum.repo.d.
 
