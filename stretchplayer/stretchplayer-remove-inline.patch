@@ -1,0 +1,25 @@
+From 9142f104cd18cf7ff6ebf144faf4ff9c011ed5fd Mon Sep 17 00:00:00 2001
+From: Yann Collette <ycollette.nospam@free.fr>
+Date: Wed, 9 Mar 2016 21:32:35 +0100
+Subject: [PATCH 2/2] remove inline
+
+---
+ src/jack_memops.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/jack_memops.c b/src/jack_memops.c
+index 684f0b4..fdea969 100644
+--- a/src/jack_memops.c
++++ b/src/jack_memops.c
+@@ -163,7 +163,7 @@
+  * less random than rand(), but good enough and 10x faster 
+  */
+ 
+-inline unsigned int fast_rand() {
++unsigned int fast_rand() {
+ 	static unsigned int seed = 22222;
+ 	seed = (seed * 96314165) + 907633515;
+ 
+-- 
+2.5.0
+
