@@ -12,6 +12,7 @@ Group:        Applications/Multimedia
 Source0:      https://github.com/smbolton/%{name}/archive/%{commit0}.tar.gz#/%{name}-%{shortcommit0}.tar.gz
 Patch0:       stretchplayer-fix-cast.patch
 Patch1:       stretchplayer-remove-inline.patch
+Patch2:       stretchplayer-disable-mpg123.patch
 
 License:      GPLv2+
 
@@ -23,7 +24,6 @@ BuildRequires: desktop-file-utils
 BuildRequires: libsndfile-devel
 BuildRequires: libsamplerate-devel
 BuildRequires: rubberband-devel
-BuildRequires: libmpg123-devel
 
 %description
 StretchPlayer is an audio file player that allows you to change the
@@ -41,6 +41,7 @@ pre-recorded song.  You can:
 
 %patch0 -p1 
 %patch1 -p1 
+%patch2 -p1 
 
 %build
 

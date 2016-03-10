@@ -1,0 +1,104 @@
+From f6f2ff9d2c820049f79634034b4d1db6c0281caf Mon Sep 17 00:00:00 2001
+From: Yann Collette <ycollette.nospam@free.fr>
+Date: Thu, 10 Mar 2016 07:26:19 +0100
+Subject: [PATCH] disable mpg123
+
+---
+ CMakeLists.txt     | 2 ++
+ src/CMakeLists.txt | 3 +++
+ src/Engine.cpp     | 9 +++++++++
+ src/Engine.hpp     | 2 ++
+ 4 files changed, 16 insertions(+)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index ff56a42..2a1172b 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -4,6 +4,8 @@
+ 
+ CMAKE_MINIMUM_REQUIRED(VERSION 2.4)
+ 
++OPTION(USE_MPG123 "Use libmpg123" OFF)
++
+ SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake")
+ 
+ SET(VERSION_MAJOR "0")
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index 61f003c..908d2bb 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -44,9 +44,12 @@ FIND_PACKAGE(LibSndfile REQUIRED)
+ INCLUDE_DIRECTORIES(${LibSndfile_INCLUDE_DIRS})
+ SET(LIBS ${LIBS} ${LibSndfile_LIBRARIES})
+ 
++IF ( USE_MPG123 )
+ FIND_PACKAGE(LibMpg123 REQUIRED)
+ INCLUDE_DIRECTORIES(${LibMpg123_INCLUDE_DIRS})
+ SET(LIBS ${LIBS} ${LibMpg123_LIBRARIES})
++ADD_DEFINITIONS(-DUSE_MPG123)
++ENDIF( USE_MPG123 )
+ 
+ FIND_PACKAGE(RubberBand REQUIRED)
+ INCLUDE_DIRECTORIES(${RubberBand_INCLUDE_DIRS})
+diff --git a/src/Engine.cpp b/src/Engine.cpp
+index 11a1fa2..48cd12f 100644
+--- a/src/Engine.cpp
++++ b/src/Engine.cpp
+@@ -22,7 +22,9 @@
+ #include "RubberBandServer.hpp"
+ #include "Configuration.hpp"
+ #include <sndfile.h>
++#ifdef USE_MPG123
+ #include <mpg123.h>
++#endif
+ #include <stdexcept>
+ #include <cassert>
+ #include <cstring>
+@@ -337,6 +339,7 @@ namespace StretchPlayer
+ 	return true;
+     }
+ 
++#ifdef USE_MPG123
+     /**
+      * Attempt to load an MP3 file via libmpg123
+      *
+@@ -423,6 +426,7 @@ namespace StretchPlayer
+ 	mpg123_exit();
+ 	return true;
+     }
++#endif
+ 
+     /**
+      * Load a file
+@@ -439,9 +443,14 @@ namespace StretchPlayer
+ 	_output_position = 0;
+ 	_stretcher->reset();
+ 
++#ifdef USE_MPG123
+ 	if( ! _load_song_using_libsndfile(filename) &&
+ 	    ! _load_song_using_libmpg123(filename) )
+ 	    return QString();
++#else
++        if( ! _load_song_using_libsndfile(filename) ) 
++            return QString();
++#endif
+ 
+ 	QFileInfo f_info(filename);
+ 	return f_info.fileName();
+diff --git a/src/Engine.hpp b/src/Engine.hpp
+index 4899be0..cd9fc0d 100644
+--- a/src/Engine.hpp
++++ b/src/Engine.hpp
+@@ -126,7 +126,9 @@ private:
+     void _zero_buffers(uint32_t nframes);
+     void _process_playing(uint32_t nframes);
+     bool _load_song_using_libsndfile(const QString &filename);
++#ifdef USE_MPG123
+     bool _load_song_using_libmpg123(const QString &filename);
++#endif
+     void _handle_loop_ab();
+ 
+     typedef std::set<EngineMessageCallback*> callback_seq_t;
+-- 
+2.5.0
+
