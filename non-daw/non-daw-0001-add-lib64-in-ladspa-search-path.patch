@@ -1,0 +1,25 @@
+From 019cc0c91a747be24c293d75e1688721400cae5b Mon Sep 17 00:00:00 2001
+From: Yann Collette <ycollette.nospam@free.fr>
+Date: Sun, 13 Mar 2016 19:14:08 +0100
+Subject: [PATCH] add lib64 in ladspa search path
+
+---
+ mixer/src/LADSPAInfo.C | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/mixer/src/LADSPAInfo.C b/mixer/src/LADSPAInfo.C
+index 8fc611e..150916e 100644
+--- a/mixer/src/LADSPAInfo.C
++++ b/mixer/src/LADSPAInfo.C
+@@ -81,7 +81,7 @@ LADSPAInfo::RescanPlugins(void)
+ 			cerr << "WARNING: LADSPA_PATH environment variable not set" << endl;
+ 			cerr << "         Assuming /usr/lib/ladspa:/usr/local/lib/ladspa" << endl;
+ 
+-			ScanPathList("/usr/lib/ladspa:/usr/local/lib/ladspa", &LADSPAInfo::ExaminePluginLibrary);
++			ScanPathList("/usr/lib/ladspa:/usr/local/lib/ladspa:/usr/lib64/ladspa:/usr/local/lib64/ladspa", &LADSPAInfo::ExaminePluginLibrary);
+ 		}
+ 	}
+ 
+-- 
+2.5.0
+
