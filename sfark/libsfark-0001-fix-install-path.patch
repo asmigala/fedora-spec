@@ -1,0 +1,31 @@
+From 36f4bcaac501194bb09079cc3299aa0b894b8b2a Mon Sep 17 00:00:00 2001
+From: Yann Collette <ycollette.nospam@free.fr>
+Date: Wed, 16 Mar 2016 16:04:13 +0100
+Subject: [PATCH] fix install path
+
+---
+ Makefile | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index c77826c..a4ef73a 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1,4 +1,5 @@
+-
++LIB_PATH?=/usr/local/lib
++INC_PATH?=/usr/local/include
+ INSTALL?=install
+ 
+ OBJECTS=sfklCoding.o sfklDiff.o sfklLPC.o sfklZip.o sfklCrunch.o sfklFile.o sfklString.o
+@@ -26,5 +27,5 @@ libsfark.$(SO): $(OBJECTS)
+ 	$(CXX) -shared $(LDFLAGS) $(OBJECTS) -o libsfark.$(SO)
+ 
+ install: libsfark.$(SO) sfArkLib.h
+-	$(INSTALL) libsfark.$(SO) $(DESTDIR)/usr/local/lib/libsfark.$(SO)
+-	$(INSTALL) sfArkLib.h $(DESTDIR)/usr/local/include/sfArkLib.h
++	$(INSTALL) libsfark.$(SO) $(DESTDIR)/${LIB_PATH}/libsfark.$(SO)
++	$(INSTALL) sfArkLib.h $(DESTDIR)/${INC_PATH}/sfArkLib.h
+-- 
+2.5.0
+
