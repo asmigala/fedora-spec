@@ -11,12 +11,15 @@ lang fr_FR.UTF-8
 keyboard fr-latin9
 timezone Europe/Paris
 
-auth --useshadow --enablemd5
+auth --useshadow --passalgo=sha512
 selinux --enforcing
 firewall --enabled --service=mdns
 xconfig --startxonboot
-part / --size 3072 --fstype ext4
+part / --size 10240 --fstype ext4
 services --enabled=NetworkManager --disabled=network,sshd
+
+#enable threaded irqs
+bootloader --append="threadirqs"
 
 # add CCRMA and rpmfusion repos
 repo --name=ccrma --baseurl=http://ccrma.stanford.edu/planetccrma/mirror/fedora/linux/planetccrma/$releasever/$basearch
@@ -56,6 +59,9 @@ kernel-rt
 # "Diagnosis/recovery tool useful from a Live OS image".  Leaving this untouched
 # for now.
 memtest86+
+
+# Without this, initramfs generation during live image creation fails: #1242586
+dracut-live
 
 # Make live images easy to shutdown and the like in libvirt
 qemu-guest-agent
@@ -176,12 +182,6 @@ if ! strstr "\`cat /proc/cmdline\`" nopersistenthome && [ -n "\$homedev" ] ; the
   action "Mounting persistent /home" mountPersistentHome
 fi
 
-# make it so that we don't do writing to the overlay for things which
-# are just tmpdirs/caches
-mount -t tmpfs -o mode=0755 varcacheyum /var/cache/yum
-mount -t tmpfs vartmp /var/tmp
-[ -x /sbin/restorecon ] && /sbin/restorecon /var/cache/yum /var/tmp >/dev/null 2>&1
-
 if [ -n "\$configdone" ]; then
   exit 0
 fi
@@ -211,7 +211,7 @@ systemctl stop mdmonitor.service 2> /dev/null || :
 systemctl stop mdmonitor-takeover.service 2> /dev/null || :
 
 # don't enable the gnome-settings-daemon packagekit plugin
-gsettings set org.gnome.settings-daemon.plugins.updates active 'false' || :
+gsettings set org.gnome.software download-updates 'false' || :
 
 # don't start cron/at as they tend to spawn things which are
 # disk intensive that are painful on a live image
@@ -220,8 +220,11 @@ systemctl --no-reload disable atd.service 2> /dev/null || :
 systemctl stop crond.service 2> /dev/null || :
 systemctl stop atd.service 2> /dev/null || :
 
+# Don't sync the system clock when running live (RHBZ #1018162)
+sed -i 's/rtcsync//' /etc/chrony.conf
+
 # Mark things as configured
-/bin/touch /.liveimg-configured
+touch /.liveimg-configured
 
 # add static hostname to work around xauth bug
 # https://bugzilla.redhat.com/show_bug.cgi?id=679486
@@ -249,7 +252,7 @@ exists() {
     \$*
 }
 
-/bin/touch /.liveimg-late-configured
+touch /.liveimg-late-configured
 
 # read some variables out of /proc/cmdline
 for o in \`cat /proc/cmdline\` ; do
@@ -304,9 +307,26 @@ chmod 755 /etc/rc.d/init.d/livesys-late
 # enable tmpfs for /tmp
 systemctl enable tmp.mount
 
+# As livecd-creator is still yum based, we only get yum's yumdb during the
+# image compose. Migrate this over to dnf so that dnf and PackageKit can keep
+# track where packages came from.
+if [ ! -d /var/lib/dnf ]; then
+  mkdir -p /var/lib/dnf
+  mv /var/lib/yum/yumdb /var/lib/dnf/
+  rm -rf /var/lib/yum/
+fi
+
+# make it so that we don't do writing to the overlay for things which
+# are just tmpdirs/caches
+# note https://bugzilla.redhat.com/show_bug.cgi?id=1135475
+cat >> /etc/fstab << EOF
+vartmp   /var/tmp    tmpfs   defaults   0  0
+varcacheyum /var/cache/yum  tmpfs   mode=0755,context=system_u:object_r:rpm_var_cache_t:s0   0   0
+EOF
+
 # work around for poor key import UI in PackageKit
 rm -f /var/lib/rpm/__db*
-#releasever=23#$(rpm -q --qf '%{version}\n' fedora-release)
+releasever=$(rpm -q --qf '%{version}\n' --whatprovides system-release)
 basearch=$(uname -i)
 rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch
 echo "Packages within this LiveCD"
@@ -325,11 +345,20 @@ rm -f /core*
 # convince readahead not to collect
 # FIXME: for systemd
 
+# forcibly regenerate fontconfig cache (so long as this live image has
+# fontconfig) - see #1169979
+if [ -x /usr/bin/fc-cache ] ; then
+   fc-cache -f
+fi
+
+echo 'File created by kickstart. See systemd-update-done.service(8).' \
+    | tee /etc/.updated >/var/.updated
+
 %end
 
 
 %post --nochroot
-cp $INSTALL_ROOT/usr/share/doc/*-release/GPL $LIVE_ROOT/GPL
+cp $INSTALL_ROOT/usr/share/licenses/*-release/* $LIVE_ROOT/
 
 # only works on x86, x86_64
 if [ "$(uname -i)" = "i386" -o "$(uname -i)" = "x86_64" ]; then
@@ -341,9 +370,6 @@ fi
 #################################
 # List packages to be installed #
 #################################
-
-# DVD size partition
-part / --size 10240 --fstype ext4
 
 #enable threaded irqs
 bootloader --append="threadirqs"
