@@ -1,0 +1,51 @@
+From 65fdc3e34f9b5d1e6878e8b3f984f8fc0202d52d Mon Sep 17 00:00:00 2001
+From: Yann Collette <ycollette.nospam@free.fr>
+Date: Sun, 8 May 2016 14:52:41 +0200
+Subject: [PATCH] fix install
+
+---
+ CMakeLists.txt | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index a49456d..368586f 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -101,6 +101,7 @@ set( LOMSE_PKG_DIR  ${LOMSE_ROOT_DIR}/packages )
+ set( OUTDIR ${CMAKE_CURRENT_BINARY_DIR}/bin )
+ set( EXECUTABLE_OUTPUT_PATH ${OUTDIR})
+ set( LIBRARY_OUTPUT_PATH ${OUTDIR})
++set( LIBDIR "lib" CACHE STRING "lib dir name")
+ message(STATUS "** LOMSE_ROOT_DIR: ${LOMSE_ROOT_DIR}")
+ message(STATUS "** CMAKE_CURRENT_SOURCE_DIR: ${CMAKE_CURRENT_SOURCE_DIR}")
+ message(STATUS "** LOMSE_SRC_DIR: ${LOMSE_SRC_DIR}")
+@@ -469,7 +470,7 @@ message(STATUS "CMAKE_INSTALL_PREFIX = " ${CMAKE_INSTALL_PREFIX} )
+ if( UNIX )
+ 
+     #define base paths
+-    set(LOMSE_LIBDIR        ${CMAKE_INSTALL_PREFIX}/lib)
++    set(LOMSE_LIBDIR        ${CMAKE_INSTALL_PREFIX}/${LIBDIR})
+     set(LOMSE_INCLUDEDIR    ${CMAKE_INSTALL_PREFIX}/include/lomse )
+ 
+     # copy generated libraries
+@@ -525,7 +526,7 @@ elseif( WIN32 )
+ #-------------------------------------------------------------
+ 
+     #define base paths
+-    set(LOMSE_LIBDIR        ${CMAKE_INSTALL_PREFIX}/lib)
++    set(LOMSE_LIBDIR        ${CMAKE_INSTALL_PREFIX}/${LIBDIR})
+     set(LOMSE_INCLUDEDIR    ${CMAKE_INSTALL_PREFIX}/include/lomse )
+ 
+     # copy generated libraries
+@@ -587,7 +588,7 @@ endif()
+ ###############################################################################
+ 
+ if(NOT DEFINED LOMSE_PKG_CONFIG_INSTALL)
+-    set( LOMSE_PKG_CONFIG_INSTALL "/usr/lib/pkgconfig" )
++    set( LOMSE_PKG_CONFIG_INSTALL "/usr/${LIBDIR}/pkgconfig" )
+ endif()
+ 
+ set(prefix ${CMAKE_INSTALL_PREFIX})
+-- 
+2.5.5
+

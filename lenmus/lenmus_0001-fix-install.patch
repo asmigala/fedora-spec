@@ -1,0 +1,27 @@
+From e8a3fb717cd485ad29fafe2ef2f375c4fd5714de Mon Sep 17 00:00:00 2001
+From: Yann Collette <ycollette.nospam@free.fr>
+Date: Sun, 8 May 2016 15:21:52 +0200
+Subject: [PATCH] fix install
+
+---
+ CMakeLists.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index d501206..b93656d 100755
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -710,8 +710,8 @@ install( TARGETS ${LENMUS} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin" )
+     # ------------------------------------------------------------------------------
+ 
+     # files in root folder
+-install(FILES  AUTHORS CHANGELOG INSTALL LICENSE
+-               NEWS README THANKS 
++install(FILES  AUTHORS CHANGELOG.md INSTALL LICENSE
++               NEWS README.md THANKS 
+         DESTINATION ${ROOT_INSTALL_HOME} )
+ 
+     # locale
+-- 
+2.5.5
+
