@@ -20,13 +20,14 @@ BuildRequires: zlib-devel
 BuildRequires: libpng-devel
 BuildRequires: freetype-devel
 BuildRequires: portmidi-devel
+BuildRequires: portaudio-devel
 BuildRequires: cmake
 BuildRequires: wxGTK3-devel
 BuildRequires: sqlite-devel
-#BuildRequires: lomse-devel
+BuildRequires: lomse-devel
 
 %description
-in the study of music theory and ear training.
+LenMus Phonascus, "the teacher of music", is a free program to help you in the study of music theory and ear training.
 
 The LenMus Project is an open project, committed to the principles of
 Open Source, free education, and open access to information. It has no comercial
