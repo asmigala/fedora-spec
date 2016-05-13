@@ -21,6 +21,7 @@ BuildRequires: jack-audio-connection-kit-devel
 BuildRequires: SDL-devel
 BuildRequires: SDL_image-devel
 BuildRequires: SDL_ttf-devel
+BuildRequires: pulseaudio-libs-devel
 
 %description
 Picoloop is a synth Stepsequencer (a nanoloop clone).
@@ -40,10 +41,10 @@ cd picoloop
 %make_build -f Makefile.RtAudio_debian clean
 %make_build -f Makefile.PatternPlayer_debian_RtAudio clean
 
-%make_build -f Makefile.RtMidi_debian  CFLAGS="-std=c++11 -O3 -Wall -I.. -DHAVE_GETTIMEOFDAY -D__LINUX_ALSA__ -D__LINUX_JACK__"
-%make_build -f Makefile.RtAudio_debian CFLAGS="-std=c++11 -O3 -Wall -I.. -DHAVE_GETTIMEOFDAY -D__LINUX_ALSA__ -D__LINUX_JACK__"
+%make_build -f Makefile.RtMidi_debian  CFLAGS="-std=c++11 -O3 -Wall -I.. -DHAVE_GETTIMEOFDAY -D__LINUX_ALSA__ -D__LINUX_JACK__ -D__LINUX_PULSE__"
+%make_build -f Makefile.RtAudio_debian CFLAGS="-std=c++11 -O3 -Wall -I.. -DHAVE_GETTIMEOFDAY -D__LINUX_ALSA__ -D__LINUX_JACK__ -D__LINUX_PULSE__"
 %make_build -f Makefile.PatternPlayer_debian_RtAudio DIRTOCREATE
-%make_build -f Makefile.PatternPlayer_debian_RtAudio CFLAGS="-c -std=c++11 -O3 -D__LINUX__ -DLINUX -I. -LSDL/lib -D__RTAUDIO__ -D __RTMIDI__ -DLINUX_DESKTOP -fpermissive" LDFLAGS="-lasound -lSDL -lSDL_ttf -lpthread"
+%make_build -f Makefile.PatternPlayer_debian_RtAudio CFLAGS="-c -std=c++11 -O3 -D__LINUX__ -DLINUX -I. -LSDL/lib -D__RTAUDIO__ -D __RTMIDI__ -DLINUX_DESKTOP -fpermissive" LDFLAGS="-lasound -lSDL -lSDL_ttf -lpthread -lpulse -lpulse-simple"
 
 %install
 
