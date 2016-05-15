@@ -1,11 +1,12 @@
 Summary: Software Synthesizer
 Name: drumgizmo
-Version: 0.9.8.1
+Version: 0.9.10
 Release: 1%{?dist}
 License: GPL
 Group: Applications/Multimedia
 URL:            http://git.drumgizmo.org/drumgizmo.git
-Source0:        drumgizmo-0.9.8.1.tar.gz
+Source0:        drumgizmo-%version.tar.gz
+Source1:        drumgizmo_autogen.sh
 
 BuildRequires: autoconf
 BuildRequires: automake
@@ -29,13 +30,15 @@ BuildRequires: mesa-libGLU-devel
 DrumGizmo is an open source cross-platform drum plugin and stand-alone application. It is comparable to several commercial drum plugin products. 
 
 %prep
-%setup -q -c %{name}
+%setup -qn %{name}-%version
 
 %build
 
-./autogen.sh
-%configure
-%{__make} %{_smp_mflags}
+cp %{SOURCE1} .
+./drumgizmo_autogen.sh
+%configure --enable-lv2 --libdir=%{_libdir}
+
+%{__make} DESTDIR=%{buildroot} %{_smp_mflags}
 
 %install
 
@@ -59,5 +62,6 @@ XTRA="X-Synthesis X-MIDI X-Jack"
 
 
 %changelog
+* Thu May 12 2016 Yann Collette <ycollette dot nospam at free.fr> 0.9.10-1
 * Thu Jun 04 2015 Yann Collette <ycollette dot nospam at free.fr> 0.9.8.1-1
 - Initial release of spec fil to 0.9.8.1
